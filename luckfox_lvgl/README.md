@@ -43,8 +43,7 @@ third_party/lvgl
 
 Example:
 
-git clone https://github.com/lvgl/lvgl third_party/lvgl
-
+git clone --branch release/v8.3 https://github.com/lvgl/lvgl.git third_party/lvgl
 Then build:
 
 make
