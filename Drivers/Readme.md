@@ -73,9 +73,22 @@ Step 5 build the boot.img
 ```
 /home/luckfox-pico# ./build.sh kernel 
 ```
-step 6  get the boot.img and flash it with the rest of the luckfox provided image to an SD card
-Collect the boot.img from the sdk
+step 6  Image Flashing SD Card 
+
+Collect the boot.img from the container SDK
 ```
 /home/luckfox-pico/sysdrv/out/image_uclibc_rv1106/boot.img
 ```
 
+Format the SD Card preferable with the luckfox SD CARD tool
+```
+https://wiki.luckfox.com/Tools/SDCardFormatter.zip
+```
+Flash the SD Card with SocToolKit Version: v1.98 luckfox tool
+```
+https://wiki.luckfox.com/Tools/SocToolKit_v1.98_win.zip
+```
+Follow their steps and remember to replace their boot.img for the one we just created
+```
+https://wiki.luckfox.com/Luckfox-Pico-Pro-Max/Flash-image#42-flashing-image-to-tf-card
+```
