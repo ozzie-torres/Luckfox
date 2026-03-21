@@ -28,12 +28,16 @@ Mount your SDK directory into the container (example):
 sudo docker run -it   -v $(pwd):/home   luckfoxtech/luckfox_pico:1.0   /bin/bash
 ```
 
-Step 2 — Apply ILI9488 Driver Changes
+Step 2 — Apply ILI9488 Driver & DTS Changes
 Inside the SDK :
 
 Copy or apply the modified driver:
 ```
 /home/luckfox-pico/sysdrv/source/kernel/drivers/staging/fbtft/fb_ili9488.c
+```
+Copy - Replace or apply the modified dts file in this Repo to the following folder in SDK :
+```
+/home/luckfox-pico/sysdrv/source/kernel/arch/arm/boot/dts/rv1106g-luckfox-pico-pro-max.dts 
 ```
 Modify also these 2 files so you can see the ili9488 driver in the kernelconfig menu
 
