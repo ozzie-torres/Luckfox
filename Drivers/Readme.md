@@ -35,9 +35,10 @@ Copy or apply the modified driver:
 ```
 /home/luckfox-pico/sysdrv/source/kernel/drivers/staging/fbtft/fb_ili9488.c
 ```
-Copy - Replace or apply the modified dts file in this Repo to the following folder in SDK :
+Copy - Replace or apply the modified dts and dtsi files in this Repo to the following folder in SDK :
 ```
-/home/luckfox-pico/sysdrv/source/kernel/arch/arm/boot/dts/rv1106g-luckfox-pico-pro-max.dts 
+/home/luckfox-pico/sysdrv/source/kernel/arch/arm/boot/dts/rv1106g-luckfox-pico-pro-max.dts
+/home/luckfox-pico/sysdrv/source/kernel/arch/arm/boot/dts/rv1106-luckfox-pico-pro-max-ipc.dtsi
 ```
 Modify also these 2 files so you can see the ili9488 driver in the kernelconfig menu
 
