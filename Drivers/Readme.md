@@ -9,8 +9,11 @@ Set up Docker and verified the SDK builds correctly
 * SDK Guide:
 https://wiki.luckfox.com/Luckfox-Pico-Pro-Max/SDK-Image-Compilation/
 
-* Ubuntu Image:
+* Ubuntu Image compiled:
 https://drive.google.com/drive/folders/14kFWY93MZ4Zga4ke2PVQgUs1y9xcMG0S
+
+* Ubuntu Git Source Image:
+git clone https://github.com/LuckfoxTECH/luckfox-pico.git
 
 We are NOT rebuilding the full OS image.
 
