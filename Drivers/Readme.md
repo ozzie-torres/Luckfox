@@ -26,8 +26,9 @@ Replace the original boot.img from the Ubuntu image
 Flash the updated image to the SD card
 
 Step 1 — Start the SDK Container
-Mount your SDK directory into the container (example):
+Download Ubuntu image source and mount your SDK directory into the container (example):
 ```
+git clone https://github.com/LuckfoxTECH/luckfox-pico.git
 sudo docker run -it   -v $(pwd):/home   luckfoxtech/luckfox_pico:1.0   /bin/bash
 ```
 
