@@ -1,0 +1,142 @@
+{
+  "screen": {
+    "width": 320,
+    "height": 480
+  },
+  "touch": {
+    "min_x": 463,
+    "max_x": 3411,
+    "min_y": 554,
+    "max_y": 3688,
+    "invert_x": false,
+    "invert_y": false,
+    "min_emit_interval_ms": 220,
+    "duplicate_radius": 28,
+    "max_samples": 24,
+    "watchdog_restart_ms": 2500
+  },
+  "display": {
+    "backend": "framebuffer",
+    "framebuffer": "/dev/fb0",
+    "render_after_touch_idle_ms": 280
+  },
+  "debug": {
+    "show_touch_marker": false,
+    "show_touch_text": false,
+    "show_button_bounds": false,
+    "button_bounds_color": [255, 255, 0]
+  },
+  "initial_screen": "main",
+  "screens": [
+    {
+      "id": "main",
+      "background": [30, 30, 30],
+      "buttons": ["btn_out1", "btn_out2", "btn_out3", "btn_out4"]
+    }
+  ],
+  "buttons": [
+    {
+      "id": "btn_out1",
+      "label": "OUT1",
+      "x": 20,
+      "y": 40,
+      "w": 120,
+      "h": 80,
+      "indicator": {
+        "state_ref": "outputs.out1",
+        "true_color": [0, 180, 0],
+        "false_color": [100, 100, 100]
+      }
+    },
+    {
+      "id": "btn_out2",
+      "label": "OUT2",
+      "x": 180,
+      "y": 40,
+      "w": 120,
+      "h": 80,
+      "indicator": {
+        "state_ref": "outputs.out2",
+        "true_color": [0, 180, 0],
+        "false_color": [100, 100, 100]
+      }
+    },
+    {
+      "id": "btn_out3",
+      "label": "OUT3",
+      "x": 20,
+      "y": 160,
+      "w": 120,
+      "h": 80,
+      "indicator": {
+        "state_ref": "outputs.out3",
+        "true_color": [0, 180, 0],
+        "false_color": [100, 100, 100]
+      }
+    },
+    {
+      "id": "btn_out4",
+      "label": "OUT4",
+      "x": 180,
+      "y": 160,
+      "w": 120,
+      "h": 80,
+      "indicator": {
+        "state_ref": "outputs.out4",
+        "true_color": [0, 180, 0],
+        "false_color": [100, 100, 100]
+      }
+    }
+  ],
+  "inputs": [
+    { "id": "touch_enabled", "type": "bool", "initial": true }
+  ],
+  "outputs": [
+    { "id": "out1", "type": "bool", "initial": false },
+    { "id": "out2", "type": "bool", "initial": false },
+    { "id": "out3", "type": "bool", "initial": false },
+    { "id": "out4", "type": "bool", "initial": false }
+  ],
+  "rules": [
+    {
+      "id": "toggle_out1",
+      "when": { "type": "button_press", "button": "btn_out1" },
+      "if": [
+        { "ref": "inputs.touch_enabled", "op": "==", "value": true }
+      ],
+      "actions": [
+        { "type": "toggle", "target": "outputs.out1" }
+      ]
+    },
+    {
+      "id": "toggle_out2",
+      "when": { "type": "button_press", "button": "btn_out2" },
+      "if": [
+        { "ref": "inputs.touch_enabled", "op": "==", "value": true }
+      ],
+      "actions": [
+        { "type": "toggle", "target": "outputs.out2" }
+      ]
+    },
+    {
+      "id": "toggle_out3",
+      "when": { "type": "button_press", "button": "btn_out3" },
+      "if": [
+        { "ref": "inputs.touch_enabled", "op": "==", "value": true }
+      ],
+      "actions": [
+        { "type": "toggle", "target": "outputs.out3" }
+      ]
+    },
+    {
+      "id": "toggle_out4",
+      "when": { "type": "button_press", "button": "btn_out4" },
+      "if": [
+        { "ref": "inputs.touch_enabled", "op": "==", "value": true }
+      ],
+      "actions": [
+        { "type": "toggle", "target": "outputs.out4" }
+      ]
+    }
+  ]
+}
