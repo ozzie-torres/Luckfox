@@ -102,6 +102,7 @@ For `gpio` tags:
 - `direction`: optional; defaults to `in` for inputs and `out` for outputs
 - `active_low`: optional boolean; defaults to `false`
 - `edge`: optional; defaults to `both` for inputs and `none` for outputs
+- `debounce_ms`: optional input debounce window in milliseconds
 - `gpio_root`: optional override for the sysfs GPIO root
 
 This keeps the runtime small on the Luckfox:
@@ -125,7 +126,7 @@ JSON rule model stays consistent.
 Example input definition:
 
 ```json
-{ "id": "di_start", "type": "bool", "driver": "gpio", "gpio": 57, "edge": "both" }
+{ "id": "di_start", "type": "bool", "driver": "gpio", "gpio": 57, "edge": "both", "debounce_ms": 50 }
 ```
 
 Example rule:

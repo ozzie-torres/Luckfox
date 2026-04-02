@@ -75,9 +75,11 @@ class GPIOTagBinding(BaseTagBinding):
         self.active_low = bool(cfg.get("active_low", False))
         self.direction = cfg.get("direction", "out" if area == "outputs" else "in")
         self.edge = cfg.get("edge", "both" if area == "inputs" else "none")
+        self.debounce_s = cfg.get("debounce_ms", 0) / 1000.0
         self._event_fd = None
         self._poller = None
         self._last_value = None
+        self._last_event_time = 0.0
 
         self._ensure_exported()
         self._configure_direction()
@@ -128,7 +130,13 @@ class GPIOTagBinding(BaseTagBinding):
         if new_value == self._last_value:
             return None
 
+        now = time.monotonic()
+        if self.debounce_s > 0 and now - self._last_event_time < self.debounce_s:
+            self._last_value = new_value
+            return None
+
         self._last_value = new_value
+        self._last_event_time = now
         return {
             "type": "input_change",
             "input": self.tag_id,
