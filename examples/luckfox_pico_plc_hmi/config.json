@@ -10,6 +10,7 @@
     "max_y": 3688,
     "invert_x": false,
     "invert_y": false,
+    "watchdog_enabled": false,
     "min_emit_interval_ms": 220,
     "duplicate_radius": 28,
     "max_samples": 24,

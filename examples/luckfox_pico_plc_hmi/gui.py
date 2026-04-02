@@ -131,7 +131,7 @@ class GUIRenderer:
                 text_color,
             )
 
-        if self.debug_cfg.get("show_touch_marker", True):
+        if self.debug_cfg.get("show_touch_marker", False):
             self._draw_touch_marker()
 
         self._fb_map.flush()
@@ -287,7 +287,7 @@ class GUIRenderer:
         self._fill_rect(max(0, x - 8), max(0, y - 1), 17, 3, cross_color)
         self._fill_rect(max(0, x - 1), max(0, y - 8), 3, 17, cross_color)
 
-        if self.debug_cfg.get("show_touch_text", True):
+        if self.debug_cfg.get("show_touch_text", False):
             label = f"{x},{y}"
             if hit_button:
                 label = f"{label} {hit_button}"

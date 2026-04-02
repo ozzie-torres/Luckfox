@@ -54,6 +54,7 @@ def main():
     height = cfg["screen"]["height"]
     render_idle_ms = cfg.get("display", {}).get("render_after_touch_idle_ms", 180)
     render_idle_s = render_idle_ms / 1000.0
+    touch_watchdog_enabled = cfg.get("touch", {}).get("watchdog_enabled", False)
     touch_watchdog_ms = cfg.get("touch", {}).get("watchdog_restart_ms", 2500)
     touch_watchdog_s = touch_watchdog_ms / 1000.0
 
@@ -125,7 +126,8 @@ def main():
 
             now = time.monotonic()
             if (
-                touch_count > 0
+                touch_watchdog_enabled
+                and touch_count > 0
                 and touch_process.is_alive()
                 and now - last_touch_time >= touch_watchdog_s
                 and now - last_watchdog_restart >= touch_watchdog_s

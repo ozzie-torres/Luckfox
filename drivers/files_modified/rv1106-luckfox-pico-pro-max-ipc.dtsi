@@ -268,7 +268,8 @@
 &spi0 {
         status = "okay";
         num-cs = <2>;
-	pinctrl-0 = <&spi0m0_clk &spi0m0_miso &spi0m0_mosi &spi0m0_cs0 &spi0m0_cs1>;
+	pinctrl-0 = <&spi0m0_clk &spi0m0_miso &spi0m0_mosi &spi0m0_cs0 &touch_cs_gpio>;
+	cs-gpios = <0>, <&gpio1 RK_PD2 GPIO_ACTIVE_LOW>;
 	#address-cells = <1>;
 	#size-cells = <0>;
 	/* spidev@0 {
@@ -293,7 +294,7 @@
         fbtft@0 {
                 compatible = "ilitek,ili9488";   /* ONLY works if driver exists in your kernel */
                 reg = <0>;
-                spi-max-frequency = <32000000>;
+                spi-max-frequency = <16000000>;
                 fps = <30>;
                 buswidth = <8>;
 
@@ -401,9 +402,9 @@
 		spi0m0_cs0: spi0m0-cs0 {
 			rockchip,pins = <1 RK_PC0 4 &pcfg_pull_none>;
 		};
-                spi0m0_cs1: spi0m0-cs1 {
-                        rockchip,pins = <1 RK_PD2 4 &pcfg_pull_none>;
-                };
+		touch_cs_gpio: touch-cs-gpio {
+			rockchip,pins = <1 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
 	};
 
 	gpio1-pc7 {

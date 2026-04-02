@@ -110,11 +110,13 @@ Current note:
 The touch section can also include:
 
 ```json
+"watchdog_enabled": false,
 "watchdog_restart_ms": 2500
 ```
 
-If the combined app stops receiving touch events for longer than this timeout,
-`main.py` restarts the touch worker automatically.
+When `watchdog_enabled` is `true`, if the combined app stops receiving touch
+events for longer than this timeout, `main.py` restarts the touch worker
+automatically.
 
 ## Supported Rule Concepts
 
