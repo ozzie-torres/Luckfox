@@ -69,7 +69,45 @@ The Python code is now split into generic engine parts:
 - `gui.py`: renders screens and buttons directly to the Linux framebuffer
 - `touch.py`: reads touchscreen coordinates from Linux input events
 - `rules.py`: evaluates conditions and executes actions from `rules`
-- `hardware.py`: stores and updates generic `inputs.*` and `outputs.*` tags
+- `hardware.py`: binds generic `inputs.*` and `outputs.*` tags to runtime drivers
+
+## Hardware Binding Layer
+
+The runtime engine still talks only to generic tags such as `inputs.start` or
+`outputs.out1`. The hardware-specific part now lives inside `hardware.py`.
+
+Currently supported tag drivers:
+
+- `memory`: keeps the tag value in Python memory
+- `gpio`: binds the tag to Linux sysfs GPIO
+
+If no driver is provided, the tag uses `memory`.
+
+Example mixed configuration:
+
+```json
+"inputs": [
+  { "id": "touch_enabled", "type": "bool", "initial": true },
+  { "id": "di_start", "type": "bool", "driver": "gpio", "gpio": 34 }
+],
+"outputs": [
+  { "id": "out1", "type": "bool", "driver": "gpio", "gpio": 23, "initial": false },
+  { "id": "sim_out2", "type": "bool", "driver": "memory", "initial": false }
+]
+```
+
+For `gpio` tags:
+
+- `gpio`: Linux GPIO number used under `/sys/class/gpio`
+- `direction`: optional; defaults to `in` for inputs and `out` for outputs
+- `active_low`: optional boolean; defaults to `false`
+- `gpio_root`: optional override for the sysfs GPIO root
+
+This keeps the runtime small on the Luckfox:
+
+- the GUI stays JSON-driven
+- the rules stay generic
+- only `hardware.py` knows how to talk to real I/O
 
 ## Display Backend Notes
 
