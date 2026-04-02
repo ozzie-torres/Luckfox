@@ -13,6 +13,7 @@
     "watchdog_enabled": false,
     "min_emit_interval_ms": 220,
     "duplicate_radius": 28,
+    "duplicate_window_ms": 250,
     "max_samples": 24,
     "watchdog_restart_ms": 2500
   },
@@ -93,7 +94,7 @@
     { "id": "touch_enabled", "type": "bool", "initial": true }
   ],
   "outputs": [
-    { "id": "out1", "type": "bool", "initial": false },
+    { "id": "out1", "type": "bool", "driver": "gpio", "gpio": 56, "initial": false },
     { "id": "out2", "type": "bool", "initial": false },
     { "id": "out3", "type": "bool", "initial": false },
     { "id": "out4", "type": "bool", "initial": false }

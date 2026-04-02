@@ -34,6 +34,7 @@ class TouchReader:
         self.touch_samples = []
         self.min_emit_interval = touch_cfg.get("min_emit_interval_ms", 180) / 1000.0
         self.duplicate_radius = touch_cfg.get("duplicate_radius", 22)
+        self.duplicate_window = touch_cfg.get("duplicate_window_ms", 250) / 1000.0
         self.max_samples = touch_cfg.get("max_samples", 32)
         self.debug = os.environ.get("TOUCH_DEBUG", "").lower() in ("1", "true", "yes")
 
@@ -141,7 +142,7 @@ class TouchReader:
         self.raw_y = raw_y
         point = self._build_point()
 
-        if self.last_emit_point is not None:
+        if self.last_emit_point is not None and now - self.last_emit_time <= self.duplicate_window:
             dx = abs(point[0] - self.last_emit_point[0])
             dy = abs(point[1] - self.last_emit_point[1])
             if dx <= self.duplicate_radius and dy <= self.duplicate_radius:
