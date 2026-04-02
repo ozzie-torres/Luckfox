@@ -91,7 +91,8 @@
     }
   ],
   "inputs": [
-    { "id": "touch_enabled", "type": "bool", "initial": true }
+    { "id": "touch_enabled", "type": "bool", "initial": true },
+    { "id": "di1", "type": "bool", "driver": "gpio", "gpio": 57, "edge": "both" }
   ],
   "outputs": [
     { "id": "out1", "type": "bool", "driver": "gpio", "gpio": 56, "initial": false },
@@ -138,6 +139,22 @@
       ],
       "actions": [
         { "type": "toggle", "target": "outputs.out4" }
+      ]
+    },
+    {
+      "id": "di1_on_sets_out2",
+      "when": { "type": "input_change", "input": "di1", "value": true },
+      "actions": [
+        { "type": "set", "target": "outputs.out2", "value": true },
+        { "type": "log", "message": "DI1 changed to ON" }
+      ]
+    },
+    {
+      "id": "di1_off_sets_out2",
+      "when": { "type": "input_change", "input": "di1", "value": false },
+      "actions": [
+        { "type": "set", "target": "outputs.out2", "value": false },
+        { "type": "log", "message": "DI1 changed to OFF" }
       ]
     }
   ]

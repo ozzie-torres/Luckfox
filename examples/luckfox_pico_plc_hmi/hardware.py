@@ -13,6 +13,9 @@ Currently supported drivers:
 from __future__ import annotations
 
 import os
+import queue
+import select
+import threading
 import time
 from pathlib import Path
 
@@ -29,6 +32,18 @@ class BaseTagBinding:
 
     def set_value(self, value) -> None:
         raise NotImplementedError
+
+    def supports_events(self):
+        return False
+
+    def event_setup(self) -> None:
+        return None
+
+    def wait_for_event(self, timeout_ms):
+        return None
+
+    def close(self) -> None:
+        return None
 
 
 class MemoryTagBinding(BaseTagBinding):
@@ -56,15 +71,23 @@ class GPIOTagBinding(BaseTagBinding):
         self.value_path = self.gpio_dir / "value"
         self.direction_path = self.gpio_dir / "direction"
         self.active_low_path = self.gpio_dir / "active_low"
+        self.edge_path = self.gpio_dir / "edge"
         self.active_low = bool(cfg.get("active_low", False))
         self.direction = cfg.get("direction", "out" if area == "outputs" else "in")
+        self.edge = cfg.get("edge", "both" if area == "inputs" else "none")
+        self._event_fd = None
+        self._poller = None
+        self._last_value = None
 
         self._ensure_exported()
         self._configure_direction()
         self._configure_active_low()
+        self._configure_edge()
 
         if area == "outputs":
             self.set_value(cfg.get("initial", False))
+        else:
+            self._last_value = self.get_value()
 
     def get_value(self):
         raw = self.value_path.read_text(encoding="utf-8").strip()
@@ -78,6 +101,46 @@ class GPIOTagBinding(BaseTagBinding):
 
         normalized = self._normalize_value(value)
         self.value_path.write_text(normalized, encoding="utf-8")
+
+    def supports_events(self):
+        return self.area == "inputs" and self.edge != "none"
+
+    def event_setup(self) -> None:
+        if not self.supports_events() or self._event_fd is not None:
+            return
+
+        self._event_fd = os.open(self.value_path, os.O_RDONLY | os.O_NONBLOCK)
+        self._poller = select.poll()
+        self._poller.register(self._event_fd, select.POLLPRI | select.POLLERR)
+        self._clear_pending_edge()
+        self._last_value = self.get_value()
+
+    def wait_for_event(self, timeout_ms):
+        if self._poller is None:
+            return None
+
+        events = self._poller.poll(timeout_ms)
+        if not events:
+            return None
+
+        self._clear_pending_edge()
+        new_value = self.get_value()
+        if new_value == self._last_value:
+            return None
+
+        self._last_value = new_value
+        return {
+            "type": "input_change",
+            "input": self.tag_id,
+            "ref": f"{self.area}.{self.tag_id}",
+            "value": new_value,
+        }
+
+    def close(self) -> None:
+        if self._event_fd is not None:
+            os.close(self._event_fd)
+            self._event_fd = None
+            self._poller = None
 
     def _normalize_value(self, value):
         if self.type == "bool":
@@ -113,11 +176,29 @@ class GPIOTagBinding(BaseTagBinding):
         if self.active_low_path.exists():
             self.active_low_path.write_text("1" if self.active_low else "0", encoding="utf-8")
 
+    def _configure_edge(self):
+        if self.edge_path.exists():
+            self.edge_path.write_text(self.edge, encoding="utf-8")
+
+    def _clear_pending_edge(self):
+        if self._event_fd is None:
+            return
+        os.lseek(self._event_fd, 0, os.SEEK_SET)
+        try:
+            os.read(self._event_fd, 8)
+        except BlockingIOError:
+            pass
+        os.lseek(self._event_fd, 0, os.SEEK_SET)
+
 
 class HardwareDriver:
     def __init__(self, inputs_cfg, outputs_cfg):
         self.inputs = self._build_binding_map("inputs", inputs_cfg)
         self.outputs = self._build_binding_map("outputs", outputs_cfg)
+        self._event_queue = queue.Queue()
+        self._stop_event = threading.Event()
+        self._monitor_threads = []
+        self._start_input_monitors()
 
     def _build_binding_map(self, area, items):
         bindings = {}
@@ -145,6 +226,46 @@ class HardwareDriver:
         value = bool(self.get_tag(ref))
         self.set_tag(ref, not value)
         print(f"{ref} -> {not value}")
+
+    def poll_events(self):
+        events = []
+        while True:
+            try:
+                events.append(self._event_queue.get_nowait())
+            except queue.Empty:
+                break
+        return events
+
+    def close(self) -> None:
+        self._stop_event.set()
+        for thread in self._monitor_threads:
+            thread.join(timeout=0.5)
+
+        for binding in list(self.inputs.values()) + list(self.outputs.values()):
+            binding.close()
+
+    def _start_input_monitors(self):
+        for tag_id, binding in self.inputs.items():
+            if not binding.supports_events():
+                continue
+
+            binding.event_setup()
+            thread = threading.Thread(
+                target=self._monitor_input_binding,
+                args=(tag_id, binding),
+                daemon=True,
+            )
+            thread.start()
+            self._monitor_threads.append(thread)
+
+    def _monitor_input_binding(self, tag_id, binding):
+        while not self._stop_event.is_set():
+            event = binding.wait_for_event(250)
+            if event is None:
+                continue
+
+            print(f"Input event: {event['ref']} -> {event['value']}")
+            self._event_queue.put(event)
 
     def _get_binding(self, ref: str):
         area, tag_id = self._split_ref(ref)

@@ -101,6 +101,7 @@ For `gpio` tags:
 - `gpio`: Linux GPIO number used under `/sys/class/gpio`
 - `direction`: optional; defaults to `in` for inputs and `out` for outputs
 - `active_low`: optional boolean; defaults to `false`
+- `edge`: optional; defaults to `both` for inputs and `none` for outputs
 - `gpio_root`: optional override for the sysfs GPIO root
 
 This keeps the runtime small on the Luckfox:
@@ -108,6 +109,36 @@ This keeps the runtime small on the Luckfox:
 - the GUI stays JSON-driven
 - the rules stay generic
 - only `hardware.py` knows how to talk to real I/O
+
+## Event-Driven GPIO Inputs
+
+GPIO inputs can now be monitored with Linux edge interrupts through sysfs. When
+an input changes, `hardware.py` emits a generic runtime event:
+
+```json
+{ "type": "input_change", "input": "di_start", "ref": "inputs.di_start", "value": true }
+```
+
+Those events flow into the same `rules.py` engine used by touch events, so the
+JSON rule model stays consistent.
+
+Example input definition:
+
+```json
+{ "id": "di_start", "type": "bool", "driver": "gpio", "gpio": 57, "edge": "both" }
+```
+
+Example rule:
+
+```json
+{
+  "id": "mirror_start_input",
+  "when": { "type": "input_change", "input": "di_start", "value": true },
+  "actions": [
+    { "type": "set", "target": "outputs.out1", "value": true }
+  ]
+}
+```
 
 ## Display Backend Notes
 

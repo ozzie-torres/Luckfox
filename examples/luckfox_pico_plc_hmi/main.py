@@ -100,6 +100,14 @@ def main():
                 touch_process = start_touch_process()
                 last_watchdog_restart = time.monotonic()
 
+            for hardware_event in hardware.poll_events():
+                print(f"Hardware -> {hardware_event}")
+                effects = rules.run_event(hardware_event)
+                if effects:
+                    state_changed = apply_effects(gui, effects) or state_changed
+                else:
+                    state_changed = True
+
             while True:
                 try:
                     x, y = event_queue.get_nowait()
@@ -149,6 +157,7 @@ def main():
     finally:
         touch_process.terminate()
         touch_process.join(timeout=1.0)
+        hardware.close()
         gui.close()
 
 
