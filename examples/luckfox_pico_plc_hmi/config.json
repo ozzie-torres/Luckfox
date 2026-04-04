@@ -92,13 +92,24 @@
   ],
   "inputs": [
     { "id": "touch_enabled", "type": "bool", "initial": true },
-    { "id": "di1", "type": "bool", "driver": "gpio", "gpio": 57, "edge": "both", "debounce_ms": 50 }
+    {
+      "id": "di1",
+      "type": "bool",
+      "driver": "mcp23017",
+      "bus": 3,
+      "address": "0x27",
+      "pin": 8,
+      "interrupt_gpio": 59,
+      "interrupt_edge": "falling",
+      "pullup": true,
+      "debounce_ms": 50
+    }
   ],
   "outputs": [
-    { "id": "out1", "type": "bool", "driver": "gpio", "gpio": 56, "initial": false },
-    { "id": "out2", "type": "bool", "initial": false },
-    { "id": "out3", "type": "bool", "initial": false },
-    { "id": "out4", "type": "bool", "initial": false }
+    { "id": "out1", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 0, "initial": false },
+    { "id": "out2", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 1, "initial": false },
+    { "id": "out3", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 2, "initial": false },
+    { "id": "out4", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 3, "initial": false }
   ],
   "rules": [
     {

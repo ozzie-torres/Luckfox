@@ -80,6 +80,7 @@ Currently supported tag drivers:
 
 - `memory`: keeps the tag value in Python memory
 - `gpio`: binds the tag to Linux sysfs GPIO
+- `mcp23017`: binds the tag to a 16-bit I2C GPIO expander
 
 If no driver is provided, the tag uses `memory`.
 
@@ -104,6 +105,18 @@ For `gpio` tags:
 - `edge`: optional; defaults to `both` for inputs and `none` for outputs
 - `debounce_ms`: optional input debounce window in milliseconds
 - `gpio_root`: optional override for the sysfs GPIO root
+
+For `mcp23017` tags:
+
+- `bus`: Linux I2C bus number such as `4` for `/dev/i2c-4`
+- `address`: I2C address such as `"0x20"`
+- `pin`: MCP23017 pin number `0..15`
+- `interrupt_gpio`: Luckfox GPIO connected to MCP23017 `INTA` or `INTB`
+- `interrupt_edge`: GPIO edge for the interrupt line, usually `falling`
+- `pullup`: optional input pull-up enable
+- `invert`: optional input polarity inversion
+- `interrupt`: optional boolean; defaults to `true` for inputs
+- `debounce_ms`: optional input debounce window in milliseconds
 
 This keeps the runtime small on the Luckfox:
 
@@ -137,6 +150,67 @@ Example rule:
   "when": { "type": "input_change", "input": "di_start", "value": true },
   "actions": [
     { "type": "set", "target": "outputs.out1", "value": true }
+  ]
+}
+```
+
+## Event-Driven MCP23017 Inputs
+
+The runtime can also watch an MCP23017 interrupt line and convert expander pin
+changes into the same generic `input_change` events used by local GPIO.
+
+Planned hardware pattern:
+
+- Luckfox `/dev/i2c-3`
+- MCP23017 at address `0x27`
+- one Luckfox GPIO such as `GPIO59` / pin `10` connected to MCP23017 `INTA` or `INTB`
+- `GPA0..GPA7` used as outputs
+- `GPB0..GPB7` used as inputs
+
+Example JSON definitions:
+
+```json
+"inputs": [
+  {
+    "id": "di1",
+    "type": "bool",
+    "driver": "mcp23017",
+    "bus": 3,
+    "address": "0x27",
+    "pin": 8,
+    "interrupt_gpio": 59,
+    "interrupt_edge": "falling",
+    "pullup": true,
+    "debounce_ms": 50
+  }
+],
+"outputs": [
+  {
+    "id": "do1",
+    "type": "bool",
+    "driver": "mcp23017",
+    "bus": 3,
+    "address": "0x27",
+    "pin": 0,
+    "initial": false
+  }
+]
+```
+
+In that example:
+
+- `pin 0..7` map to port A
+- `pin 8..15` map to port B
+- `pin 8` means `GPB0`
+
+The interrupt line stays event-driven:
+
+```json
+{
+  "id": "di1_on_sets_do1",
+  "when": { "type": "input_change", "input": "di1", "value": true },
+  "actions": [
+    { "type": "set", "target": "outputs.do1", "value": true }
   ]
 }
 ```

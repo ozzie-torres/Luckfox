@@ -12,6 +12,8 @@
 / {
 	model = "Luckfox Pico Pro Max";
 	compatible = "rockchip,rv1103g-38x38-ipc-v10", "rockchip,rv1106g3";
+	pinctrl-names = "default";
+	pinctrl-0 = <&gpio1_pd3>;
 };
 
 /**********CRU**********/
@@ -123,9 +125,11 @@
             compatible = "ti,ads7846";
             reg = <1>;
             spi-max-frequency = <2000000>;
-            interrupt-parent = <&gpio2>;
-            interrupts = <RK_PA0 IRQ_TYPE_EDGE_FALLING>;
-            pendown-gpio = <&gpio2 RK_PA0 GPIO_ACTIVE_LOW>;
+            pinctrl-names = "default";
+            pinctrl-0 = <&gpio1_pd0>;
+            interrupt-parent = <&gpio1>;
+            interrupts = <RK_PD0 IRQ_TYPE_EDGE_FALLING>;
+            pendown-gpio = <&gpio1 RK_PD0 GPIO_ACTIVE_LOW>;
 
             touchscreen-inverted-x;
             touchscreen-size-x = <4095>;
@@ -137,7 +141,7 @@
 /**********I2C**********/
 /* I2C3_M1 */
 &i2c3 {
-	status = "disabled";
+	status = "okay";
 	clock-frequency = <100000>;
 };
 
