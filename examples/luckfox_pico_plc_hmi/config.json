@@ -33,17 +33,22 @@
     {
       "id": "main",
       "background": [30, 30, 30],
-      "buttons": ["btn_out1", "btn_out2", "btn_out3", "btn_out4"]
+      "buttons": [
+        "btn_out1", "btn_out2", "btn_out3", "btn_out4",
+        "btn_out5", "btn_out6", "btn_out7", "btn_out8",
+        "ind_di1", "ind_di2", "ind_di3", "ind_di4",
+        "ind_di5", "ind_di6", "ind_di7", "ind_di8"
+      ]
     }
   ],
   "buttons": [
     {
       "id": "btn_out1",
       "label": "OUT1",
-      "x": 20,
-      "y": 40,
-      "w": 120,
-      "h": 80,
+      "x": 10,
+      "y": 16,
+      "w": 70,
+      "h": 92,
       "indicator": {
         "state_ref": "outputs.out1",
         "true_color": [0, 180, 0],
@@ -53,10 +58,10 @@
     {
       "id": "btn_out2",
       "label": "OUT2",
-      "x": 180,
-      "y": 40,
-      "w": 120,
-      "h": 80,
+      "x": 86,
+      "y": 16,
+      "w": 70,
+      "h": 92,
       "indicator": {
         "state_ref": "outputs.out2",
         "true_color": [0, 180, 0],
@@ -66,10 +71,10 @@
     {
       "id": "btn_out3",
       "label": "OUT3",
-      "x": 20,
-      "y": 160,
-      "w": 120,
-      "h": 80,
+      "x": 162,
+      "y": 16,
+      "w": 70,
+      "h": 92,
       "indicator": {
         "state_ref": "outputs.out3",
         "true_color": [0, 180, 0],
@@ -79,14 +84,170 @@
     {
       "id": "btn_out4",
       "label": "OUT4",
-      "x": 180,
-      "y": 160,
-      "w": 120,
-      "h": 80,
+      "x": 238,
+      "y": 16,
+      "w": 70,
+      "h": 92,
       "indicator": {
         "state_ref": "outputs.out4",
         "true_color": [0, 180, 0],
         "false_color": [100, 100, 100]
+      }
+    },
+    {
+      "id": "btn_out5",
+      "label": "OUT5",
+      "x": 10,
+      "y": 116,
+      "w": 70,
+      "h": 92,
+      "indicator": {
+        "state_ref": "outputs.out5",
+        "true_color": [0, 180, 0],
+        "false_color": [100, 100, 100]
+      }
+    },
+    {
+      "id": "btn_out6",
+      "label": "OUT6",
+      "x": 86,
+      "y": 116,
+      "w": 70,
+      "h": 92,
+      "indicator": {
+        "state_ref": "outputs.out6",
+        "true_color": [0, 180, 0],
+        "false_color": [100, 100, 100]
+      }
+    },
+    {
+      "id": "btn_out7",
+      "label": "OUT7",
+      "x": 162,
+      "y": 116,
+      "w": 70,
+      "h": 92,
+      "indicator": {
+        "state_ref": "outputs.out7",
+        "true_color": [0, 180, 0],
+        "false_color": [100, 100, 100]
+      }
+    },
+    {
+      "id": "btn_out8",
+      "label": "OUT8",
+      "x": 238,
+      "y": 116,
+      "w": 70,
+      "h": 92,
+      "indicator": {
+        "state_ref": "outputs.out8",
+        "true_color": [0, 180, 0],
+        "false_color": [100, 100, 100]
+      }
+    },
+    {
+      "id": "ind_di1",
+      "label": "DI1",
+      "x": 10,
+      "y": 272,
+      "w": 70,
+      "h": 68,
+      "indicator": {
+        "state_ref": "inputs.di1",
+        "true_color": [255, 170, 0],
+        "false_color": [55, 55, 55]
+      }
+    },
+    {
+      "id": "ind_di2",
+      "label": "DI2",
+      "x": 86,
+      "y": 272,
+      "w": 70,
+      "h": 68,
+      "indicator": {
+        "state_ref": "inputs.di2",
+        "true_color": [255, 170, 0],
+        "false_color": [55, 55, 55]
+      }
+    },
+    {
+      "id": "ind_di3",
+      "label": "DI3",
+      "x": 162,
+      "y": 272,
+      "w": 70,
+      "h": 68,
+      "indicator": {
+        "state_ref": "inputs.di3",
+        "true_color": [255, 170, 0],
+        "false_color": [55, 55, 55]
+      }
+    },
+    {
+      "id": "ind_di4",
+      "label": "DI4",
+      "x": 238,
+      "y": 272,
+      "w": 70,
+      "h": 68,
+      "indicator": {
+        "state_ref": "inputs.di4",
+        "true_color": [255, 170, 0],
+        "false_color": [55, 55, 55]
+      }
+    },
+    {
+      "id": "ind_di5",
+      "label": "DI5",
+      "x": 10,
+      "y": 348,
+      "w": 70,
+      "h": 68,
+      "indicator": {
+        "state_ref": "inputs.di5",
+        "true_color": [255, 170, 0],
+        "false_color": [55, 55, 55]
+      }
+    },
+    {
+      "id": "ind_di6",
+      "label": "DI6",
+      "x": 86,
+      "y": 348,
+      "w": 70,
+      "h": 68,
+      "indicator": {
+        "state_ref": "inputs.di6",
+        "true_color": [255, 170, 0],
+        "false_color": [55, 55, 55]
+      }
+    },
+    {
+      "id": "ind_di7",
+      "label": "DI7",
+      "x": 162,
+      "y": 348,
+      "w": 70,
+      "h": 68,
+      "indicator": {
+        "state_ref": "inputs.di7",
+        "true_color": [255, 170, 0],
+        "false_color": [55, 55, 55]
+      }
+    },
+    {
+      "id": "ind_di8",
+      "label": "DI8",
+      "x": 238,
+      "y": 348,
+      "w": 70,
+      "h": 68,
+      "indicator": {
+        "state_ref": "inputs.di8",
+        "true_color": [255, 170, 0],
+        "false_color": [55, 55, 55]
       }
     }
   ],
@@ -153,114 +314,140 @@
       ]
     },
     {
-      "id": "di1_on_sets_out2",
+      "id": "toggle_out5",
+      "when": { "type": "button_press", "button": "btn_out5" },
+      "if": [
+        { "ref": "inputs.touch_enabled", "op": "==", "value": true }
+      ],
+      "actions": [
+        { "type": "toggle", "target": "outputs.out5" }
+      ]
+    },
+    {
+      "id": "toggle_out6",
+      "when": { "type": "button_press", "button": "btn_out6" },
+      "if": [
+        { "ref": "inputs.touch_enabled", "op": "==", "value": true }
+      ],
+      "actions": [
+        { "type": "toggle", "target": "outputs.out6" }
+      ]
+    },
+    {
+      "id": "toggle_out7",
+      "when": { "type": "button_press", "button": "btn_out7" },
+      "if": [
+        { "ref": "inputs.touch_enabled", "op": "==", "value": true }
+      ],
+      "actions": [
+        { "type": "toggle", "target": "outputs.out7" }
+      ]
+    },
+    {
+      "id": "toggle_out8",
+      "when": { "type": "button_press", "button": "btn_out8" },
+      "if": [
+        { "ref": "inputs.touch_enabled", "op": "==", "value": true }
+      ],
+      "actions": [
+        { "type": "toggle", "target": "outputs.out8" }
+      ]
+    },
+    {
+      "id": "di1_logs_on",
       "when": { "type": "input_change", "input": "di1", "value": true },
       "actions": [
-        { "type": "set", "target": "outputs.out2", "value": true },
         { "type": "log", "message": "DI1 changed to ON" }
       ]
     },
     {
-      "id": "di1_off_sets_out2",
+      "id": "di1_logs_off",
       "when": { "type": "input_change", "input": "di1", "value": false },
       "actions": [
-        { "type": "set", "target": "outputs.out2", "value": false },
         { "type": "log", "message": "DI1 changed to OFF" }
       ]
     },
     {
-      "id": "di2_tracks_out3",
+      "id": "di2_logs_on",
       "when": { "type": "input_change", "input": "di2", "value": true },
       "actions": [
-        { "type": "set", "target": "outputs.out3", "value": true },
         { "type": "log", "message": "DI2 changed to ON" }
       ]
     },
     {
-      "id": "di2_tracks_out3_off",
+      "id": "di2_logs_off",
       "when": { "type": "input_change", "input": "di2", "value": false },
       "actions": [
-        { "type": "set", "target": "outputs.out3", "value": false },
         { "type": "log", "message": "DI2 changed to OFF" }
       ]
     },
     {
-      "id": "di3_tracks_out4",
+      "id": "di3_logs_on",
       "when": { "type": "input_change", "input": "di3", "value": true },
       "actions": [
-        { "type": "set", "target": "outputs.out4", "value": true },
         { "type": "log", "message": "DI3 changed to ON" }
       ]
     },
     {
-      "id": "di3_tracks_out4_off",
+      "id": "di3_logs_off",
       "when": { "type": "input_change", "input": "di3", "value": false },
       "actions": [
-        { "type": "set", "target": "outputs.out4", "value": false },
         { "type": "log", "message": "DI3 changed to OFF" }
       ]
     },
     {
-      "id": "di4_tracks_out5",
+      "id": "di4_logs_on",
       "when": { "type": "input_change", "input": "di4", "value": true },
       "actions": [
-        { "type": "set", "target": "outputs.out5", "value": true },
         { "type": "log", "message": "DI4 changed to ON" }
       ]
     },
     {
-      "id": "di4_tracks_out5_off",
+      "id": "di4_logs_off",
       "when": { "type": "input_change", "input": "di4", "value": false },
       "actions": [
-        { "type": "set", "target": "outputs.out5", "value": false },
         { "type": "log", "message": "DI4 changed to OFF" }
       ]
     },
     {
-      "id": "di5_tracks_out6",
+      "id": "di5_logs_on",
       "when": { "type": "input_change", "input": "di5", "value": true },
       "actions": [
-        { "type": "set", "target": "outputs.out6", "value": true },
         { "type": "log", "message": "DI5 changed to ON" }
       ]
     },
     {
-      "id": "di5_tracks_out6_off",
+      "id": "di5_logs_off",
       "when": { "type": "input_change", "input": "di5", "value": false },
       "actions": [
-        { "type": "set", "target": "outputs.out6", "value": false },
         { "type": "log", "message": "DI5 changed to OFF" }
       ]
     },
     {
-      "id": "di6_tracks_out7",
+      "id": "di6_logs_on",
       "when": { "type": "input_change", "input": "di6", "value": true },
       "actions": [
-        { "type": "set", "target": "outputs.out7", "value": true },
         { "type": "log", "message": "DI6 changed to ON" }
       ]
     },
     {
-      "id": "di6_tracks_out7_off",
+      "id": "di6_logs_off",
       "when": { "type": "input_change", "input": "di6", "value": false },
       "actions": [
-        { "type": "set", "target": "outputs.out7", "value": false },
         { "type": "log", "message": "DI6 changed to OFF" }
       ]
     },
     {
-      "id": "di7_tracks_out8",
+      "id": "di7_logs_on",
       "when": { "type": "input_change", "input": "di7", "value": true },
       "actions": [
-        { "type": "set", "target": "outputs.out8", "value": true },
         { "type": "log", "message": "DI7 changed to ON" }
       ]
     },
     {
-      "id": "di7_tracks_out8_off",
+      "id": "di7_logs_off",
       "when": { "type": "input_change", "input": "di7", "value": false },
       "actions": [
-        { "type": "set", "target": "outputs.out8", "value": false },
         { "type": "log", "message": "DI7 changed to OFF" }
       ]
     },
