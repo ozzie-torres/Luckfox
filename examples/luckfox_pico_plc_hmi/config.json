@@ -263,14 +263,14 @@
     { "id": "di8", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 15, "interrupt_gpio": 59, "interrupt_edge": "falling", "pullup": true, "debounce_ms": 50 }
   ],
   "outputs": [
-    { "id": "out1", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 0, "initial": false },
-    { "id": "out2", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 1, "initial": false },
-    { "id": "out3", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 2, "initial": false },
-    { "id": "out4", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 3, "initial": false },
-    { "id": "out5", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 4, "initial": false },
-    { "id": "out6", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 5, "initial": false },
-    { "id": "out7", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 6, "initial": false },
-    { "id": "out8", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 7, "initial": false }
+    { "id": "out1", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 0, "active_low": true, "initial": false },
+    { "id": "out2", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 1, "active_low": true, "initial": false },
+    { "id": "out3", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 2, "active_low": true, "initial": false },
+    { "id": "out4", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 3, "active_low": true, "initial": false },
+    { "id": "out5", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 4, "active_low": true, "initial": false },
+    { "id": "out6", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 5, "active_low": true, "initial": false },
+    { "id": "out7", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 6, "active_low": true, "initial": false },
+    { "id": "out8", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 7, "active_low": true, "initial": false }
   ],
   "rules": [
     {

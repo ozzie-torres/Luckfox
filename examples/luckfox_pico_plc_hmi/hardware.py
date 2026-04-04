@@ -493,6 +493,7 @@ class MCPPinBinding(BaseTagBinding):
 
         self.pullup = bool(cfg.get("pullup", False))
         self.invert = bool(cfg.get("invert", False))
+        self.active_low = bool(cfg.get("active_low", False))
         self.interrupt_enabled = bool(cfg.get("interrupt", True)) if area == "inputs" else False
         self.debounce_s = cfg.get("debounce_ms", 0) / 1000.0
         self.last_value = None
@@ -500,12 +501,18 @@ class MCPPinBinding(BaseTagBinding):
         self.device.register_binding(self)
 
     def get_value(self):
-        return self.device.read_pin(self.pin)
+        value = self.device.read_pin(self.pin)
+        if self.area == "outputs" and self.active_low:
+            return not value
+        return value
 
     def set_value(self, value) -> None:
         if self.area != "outputs":
             raise PermissionError(f"Cannot write to input MCP23017 tag: {self.area}.{self.tag_id}")
-        self.device.write_pin(self.pin, bool(value))
+        physical_value = bool(value)
+        if self.active_low:
+            physical_value = not physical_value
+        self.device.write_pin(self.pin, physical_value)
 
     def settled_value(self, captured_value):
         if self.debounce_s <= 0:

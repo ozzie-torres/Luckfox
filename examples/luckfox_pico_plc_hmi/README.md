@@ -111,6 +111,7 @@ For `mcp23017` tags:
 - `bus`: Linux I2C bus number such as `4` for `/dev/i2c-4`
 - `address`: I2C address such as `"0x20"`
 - `pin`: MCP23017 pin number `0..15`
+- `active_low`: optional output polarity inversion for active-low relay boards
 - `interrupt_gpio`: Luckfox GPIO connected to MCP23017 `INTA` or `INTB`
 - `interrupt_edge`: GPIO edge for the interrupt line, usually `falling`
 - `pullup`: optional input pull-up enable
@@ -166,6 +167,7 @@ Planned hardware pattern:
 - one Luckfox GPIO such as `GPIO59` / pin `10` connected to MCP23017 `INTA` or `INTB`
 - `GPA0..GPA7` used as outputs
 - `GPB0..GPB7` used as inputs
+- relay outputs use `active_low: true` so a green button means relay ON
 
 Example JSON definitions:
 
@@ -204,6 +206,7 @@ Example JSON definitions:
     "bus": 3,
     "address": "0x27",
     "pin": 0,
+    "active_low": true,
     "initial": false
   },
   {
@@ -213,6 +216,7 @@ Example JSON definitions:
     "bus": 3,
     "address": "0x27",
     "pin": 7,
+    "active_low": true,
     "initial": false
   }
 ]
@@ -224,18 +228,34 @@ In that example:
 - `pin 8..15` map to port B and can be used as `di1..di8`
 - `pin 8` means `GPB0`
 - `pin 15` means `GPB7`
+- `active_low: true` means the output is logically ON when the physical pin is driven low
 
-The interrupt line stays event-driven:
+The current runtime keeps outputs and inputs separate:
 
-```json
-{
-  "id": "di1_on_sets_do1",
-  "when": { "type": "input_change", "input": "di1", "value": true },
-  "actions": [
-    { "type": "set", "target": "outputs.do1", "value": true }
-  ]
-}
-```
+- output buttons toggle only `outputs.*`
+- input indicators show only `inputs.*`
+- `input_change` rules log input state by default
+- inputs do not force outputs unless you add explicit rules to do that
+
+## Current HMI Layout
+
+The current single-screen layout is organized as a 4x4 grid:
+
+- top two rows: `OUT1..OUT8` touch buttons
+- bottom two rows: `DI1..DI8` status indicators
+
+Color meaning:
+
+- output gray: output OFF
+- output green: output ON
+- input dark gray: input OFF
+- input amber: input ON
+
+Because the relay board is active-low, the MCP output pins use `active_low: true`
+so the HMI still behaves naturally:
+
+- green button = relay energized
+- gray button = relay de-energized
 
 ## Display Backend Notes
 
