@@ -182,6 +182,18 @@ Example JSON definitions:
     "interrupt_edge": "falling",
     "pullup": true,
     "debounce_ms": 50
+  },
+  {
+    "id": "di8",
+    "type": "bool",
+    "driver": "mcp23017",
+    "bus": 3,
+    "address": "0x27",
+    "pin": 15,
+    "interrupt_gpio": 59,
+    "interrupt_edge": "falling",
+    "pullup": true,
+    "debounce_ms": 50
   }
 ],
 "outputs": [
@@ -193,15 +205,25 @@ Example JSON definitions:
     "address": "0x27",
     "pin": 0,
     "initial": false
+  },
+  {
+    "id": "do8",
+    "type": "bool",
+    "driver": "mcp23017",
+    "bus": 3,
+    "address": "0x27",
+    "pin": 7,
+    "initial": false
   }
 ]
 ```
 
 In that example:
 
-- `pin 0..7` map to port A
-- `pin 8..15` map to port B
+- `pin 0..7` map to port A and can be used as `do1..do8`
+- `pin 8..15` map to port B and can be used as `di1..di8`
 - `pin 8` means `GPB0`
+- `pin 15` means `GPB7`
 
 The interrupt line stays event-driven:
 

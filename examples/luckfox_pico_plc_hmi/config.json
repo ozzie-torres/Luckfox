@@ -92,24 +92,24 @@
   ],
   "inputs": [
     { "id": "touch_enabled", "type": "bool", "initial": true },
-    {
-      "id": "di1",
-      "type": "bool",
-      "driver": "mcp23017",
-      "bus": 3,
-      "address": "0x27",
-      "pin": 8,
-      "interrupt_gpio": 59,
-      "interrupt_edge": "falling",
-      "pullup": true,
-      "debounce_ms": 50
-    }
+    { "id": "di1", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 8, "interrupt_gpio": 59, "interrupt_edge": "falling", "pullup": true, "debounce_ms": 50 },
+    { "id": "di2", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 9, "interrupt_gpio": 59, "interrupt_edge": "falling", "pullup": true, "debounce_ms": 50 },
+    { "id": "di3", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 10, "interrupt_gpio": 59, "interrupt_edge": "falling", "pullup": true, "debounce_ms": 50 },
+    { "id": "di4", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 11, "interrupt_gpio": 59, "interrupt_edge": "falling", "pullup": true, "debounce_ms": 50 },
+    { "id": "di5", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 12, "interrupt_gpio": 59, "interrupt_edge": "falling", "pullup": true, "debounce_ms": 50 },
+    { "id": "di6", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 13, "interrupt_gpio": 59, "interrupt_edge": "falling", "pullup": true, "debounce_ms": 50 },
+    { "id": "di7", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 14, "interrupt_gpio": 59, "interrupt_edge": "falling", "pullup": true, "debounce_ms": 50 },
+    { "id": "di8", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 15, "interrupt_gpio": 59, "interrupt_edge": "falling", "pullup": true, "debounce_ms": 50 }
   ],
   "outputs": [
     { "id": "out1", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 0, "initial": false },
     { "id": "out2", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 1, "initial": false },
     { "id": "out3", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 2, "initial": false },
-    { "id": "out4", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 3, "initial": false }
+    { "id": "out4", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 3, "initial": false },
+    { "id": "out5", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 4, "initial": false },
+    { "id": "out6", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 5, "initial": false },
+    { "id": "out7", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 6, "initial": false },
+    { "id": "out8", "type": "bool", "driver": "mcp23017", "bus": 3, "address": "0x27", "pin": 7, "initial": false }
   ],
   "rules": [
     {
@@ -166,6 +166,116 @@
       "actions": [
         { "type": "set", "target": "outputs.out2", "value": false },
         { "type": "log", "message": "DI1 changed to OFF" }
+      ]
+    },
+    {
+      "id": "di2_tracks_out3",
+      "when": { "type": "input_change", "input": "di2", "value": true },
+      "actions": [
+        { "type": "set", "target": "outputs.out3", "value": true },
+        { "type": "log", "message": "DI2 changed to ON" }
+      ]
+    },
+    {
+      "id": "di2_tracks_out3_off",
+      "when": { "type": "input_change", "input": "di2", "value": false },
+      "actions": [
+        { "type": "set", "target": "outputs.out3", "value": false },
+        { "type": "log", "message": "DI2 changed to OFF" }
+      ]
+    },
+    {
+      "id": "di3_tracks_out4",
+      "when": { "type": "input_change", "input": "di3", "value": true },
+      "actions": [
+        { "type": "set", "target": "outputs.out4", "value": true },
+        { "type": "log", "message": "DI3 changed to ON" }
+      ]
+    },
+    {
+      "id": "di3_tracks_out4_off",
+      "when": { "type": "input_change", "input": "di3", "value": false },
+      "actions": [
+        { "type": "set", "target": "outputs.out4", "value": false },
+        { "type": "log", "message": "DI3 changed to OFF" }
+      ]
+    },
+    {
+      "id": "di4_tracks_out5",
+      "when": { "type": "input_change", "input": "di4", "value": true },
+      "actions": [
+        { "type": "set", "target": "outputs.out5", "value": true },
+        { "type": "log", "message": "DI4 changed to ON" }
+      ]
+    },
+    {
+      "id": "di4_tracks_out5_off",
+      "when": { "type": "input_change", "input": "di4", "value": false },
+      "actions": [
+        { "type": "set", "target": "outputs.out5", "value": false },
+        { "type": "log", "message": "DI4 changed to OFF" }
+      ]
+    },
+    {
+      "id": "di5_tracks_out6",
+      "when": { "type": "input_change", "input": "di5", "value": true },
+      "actions": [
+        { "type": "set", "target": "outputs.out6", "value": true },
+        { "type": "log", "message": "DI5 changed to ON" }
+      ]
+    },
+    {
+      "id": "di5_tracks_out6_off",
+      "when": { "type": "input_change", "input": "di5", "value": false },
+      "actions": [
+        { "type": "set", "target": "outputs.out6", "value": false },
+        { "type": "log", "message": "DI5 changed to OFF" }
+      ]
+    },
+    {
+      "id": "di6_tracks_out7",
+      "when": { "type": "input_change", "input": "di6", "value": true },
+      "actions": [
+        { "type": "set", "target": "outputs.out7", "value": true },
+        { "type": "log", "message": "DI6 changed to ON" }
+      ]
+    },
+    {
+      "id": "di6_tracks_out7_off",
+      "when": { "type": "input_change", "input": "di6", "value": false },
+      "actions": [
+        { "type": "set", "target": "outputs.out7", "value": false },
+        { "type": "log", "message": "DI6 changed to OFF" }
+      ]
+    },
+    {
+      "id": "di7_tracks_out8",
+      "when": { "type": "input_change", "input": "di7", "value": true },
+      "actions": [
+        { "type": "set", "target": "outputs.out8", "value": true },
+        { "type": "log", "message": "DI7 changed to ON" }
+      ]
+    },
+    {
+      "id": "di7_tracks_out8_off",
+      "when": { "type": "input_change", "input": "di7", "value": false },
+      "actions": [
+        { "type": "set", "target": "outputs.out8", "value": false },
+        { "type": "log", "message": "DI7 changed to OFF" }
+      ]
+    },
+    {
+      "id": "di8_logs_on",
+      "when": { "type": "input_change", "input": "di8", "value": true },
+      "actions": [
+        { "type": "log", "message": "DI8 changed to ON" }
+      ]
+    },
+    {
+      "id": "di8_logs_off",
+      "when": { "type": "input_change", "input": "di8", "value": false },
+      "actions": [
+        { "type": "log", "message": "DI8 changed to OFF" }
       ]
     }
   ]
