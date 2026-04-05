@@ -436,7 +436,7 @@ class MCP23017Device:
             )
 
         if binding.area == "outputs":
-            self.write_pin(binding.pin, binding.cfg.get("initial", False))
+            binding.set_value(binding.cfg.get("initial", False))
         else:
             binding.last_value = self.read_pin(binding.pin)
 
